@@ -1,5 +1,7 @@
 package com.cursosp.projetosp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,7 @@ public class Estado implements Serializable {
     private Integer id;
     private String nome;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "estado")
     private List<Cidade> cidades = new ArrayList<>();
 
