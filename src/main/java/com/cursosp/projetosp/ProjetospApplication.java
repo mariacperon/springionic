@@ -5,6 +5,7 @@ import com.cursosp.projetosp.domain.Cidade;
 import com.cursosp.projetosp.domain.Cliente;
 import com.cursosp.projetosp.domain.Endereco;
 import com.cursosp.projetosp.domain.Estado;
+import com.cursosp.projetosp.domain.ItemPedido;
 import com.cursosp.projetosp.domain.Pagamento;
 import com.cursosp.projetosp.domain.PagamentoComBoleto;
 import com.cursosp.projetosp.domain.PagamentoComCartao;
@@ -17,6 +18,7 @@ import com.cursosp.projetosp.repositories.CidadeRepository;
 import com.cursosp.projetosp.repositories.ClienteRepository;
 import com.cursosp.projetosp.repositories.EnderecoRepository;
 import com.cursosp.projetosp.repositories.EstadoRepository;
+import com.cursosp.projetosp.repositories.ItemPedidoRepository;
 import com.cursosp.projetosp.repositories.PagamentoRepository;
 import com.cursosp.projetosp.repositories.PedidoRepository;
 import com.cursosp.projetosp.repositories.ProdutoRepository;
@@ -28,6 +30,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.sql.Array;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
 public class ProjetospApplication implements CommandLineRunner {
@@ -55,6 +58,9 @@ public class ProjetospApplication implements CommandLineRunner {
 
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetospApplication.class, args);
@@ -116,5 +122,18 @@ public class ProjetospApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 	    pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.0);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.0);
+
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.0, 1, 800.0);
+
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(List.of(ip3));
+
+		p1.getItens().addAll(List.of(ip1));
+		p2.getItens().addAll(List.of(ip3));
+		p3.getItens().addAll(List.of(ip2));
+
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 }
