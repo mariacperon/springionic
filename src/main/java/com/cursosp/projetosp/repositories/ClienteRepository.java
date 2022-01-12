@@ -1,0 +1,10 @@
+package com.cursosp.projetosp.repositories;
+
+import com.cursosp.projetosp.domain.Cliente;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
+
+}
