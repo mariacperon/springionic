@@ -1,6 +1,7 @@
 package com.cursosp.projetosp.resources;
 
 import com.cursosp.projetosp.domain.Categoria;
+import com.cursosp.projetosp.dto.CategoriaDTO;
 import com.cursosp.projetosp.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -20,6 +24,13 @@ public class CategoriaResource {
 
     @Autowired
     private CategoriaService categoriaService;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoriaDTO>> findAll(){
+        List<Categoria> lista = categoriaService.findAll();
+        List<CategoriaDTO> listaDTO = lista.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listaDTO);
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> find(@PathVariable Integer id){
@@ -37,7 +48,7 @@ public class CategoriaResource {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
         obj.setId(id);
-        obj = categoriaService.update(obj);
+        categoriaService.update(obj);
         return ResponseEntity.noContent().build();
     }
 
