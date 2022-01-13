@@ -4,12 +4,14 @@ import com.cursosp.projetosp.domain.Categoria;
 import com.cursosp.projetosp.dto.CategoriaDTO;
 import com.cursosp.projetosp.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,7 +30,7 @@ public class CategoriaResource {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CategoriaDTO>> findAll(){
         List<Categoria> lista = categoriaService.findAll();
-        List<CategoriaDTO> listaDTO = lista.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        List<CategoriaDTO> listaDTO = lista.stream().map(CategoriaDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listaDTO);
     }
 
@@ -56,5 +58,12 @@ public class CategoriaResource {
     public ResponseEntity<Void> delete(@PathVariable Integer id){
         categoriaService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public ResponseEntity<Page<CategoriaDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, @RequestParam(value = "direction", defaultValue = "ASC") String direction){
+        Page<Categoria> pages = categoriaService.findPage(page, linesPerPage, orderBy, direction);
+        Page<CategoriaDTO> pageDTO = pages.map(CategoriaDTO::new);
+        return ResponseEntity.ok().body(pageDTO);
     }
 }
