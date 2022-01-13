@@ -2,8 +2,10 @@ package com.cursosp.projetosp.services;
 
 import com.cursosp.projetosp.domain.Categoria;
 import com.cursosp.projetosp.repositories.CategoriaRepository;
+import com.cursosp.projetosp.services.exceptions.DataIntegrityException;
 import com.cursosp.projetosp.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,5 +29,15 @@ public class CategoriaService {
     public Categoria update(Categoria categoria){
         find(categoria.getId());
         return repository.save(categoria);
+    }
+
+    public void delete(Integer id){
+        find(id);
+        try {
+            repository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Não é possível uma categoria que possui produto vinculados.");
+        }
+
     }
 }
