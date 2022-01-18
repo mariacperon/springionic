@@ -1,6 +1,7 @@
 package com.cursosp.projetosp.services;
 
 import com.cursosp.projetosp.domain.Categoria;
+import com.cursosp.projetosp.domain.Cliente;
 import com.cursosp.projetosp.dto.CategoriaDTO;
 import com.cursosp.projetosp.repositories.CategoriaRepository;
 import com.cursosp.projetosp.services.exceptions.DataIntegrityException;
@@ -35,8 +36,10 @@ public class CategoriaService {
         return repository.save(categoria);
     }
 
-    public void update(Categoria categoria){
-        find(categoria.getId());
+    public Categoria update(Categoria obj){
+        Categoria newObj = find(obj.getId());
+        updateData(newObj, obj);
+        return repository.save(newObj);
     }
 
     public void delete(Integer id){
@@ -56,5 +59,8 @@ public class CategoriaService {
 
     public Categoria fromDTO(CategoriaDTO objDTO){
         return new Categoria(objDTO.getId(), objDTO.getNome());
+    }
+    private void updateData(Categoria newObj, Categoria obj){
+        newObj.setNome(obj.getNome());
     }
 }
