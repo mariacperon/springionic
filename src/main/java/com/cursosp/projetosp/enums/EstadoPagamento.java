@@ -33,7 +33,6 @@ public enum EstadoPagamento{
                 return ep;
             }
         }
-
         throw new IllegalArgumentException("Id inválido: "+ cod);
     }
 }
