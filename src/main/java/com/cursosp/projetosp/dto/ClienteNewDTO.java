@@ -1,15 +1,25 @@
 package com.cursosp.projetosp.dto;
 
 import com.cursosp.projetosp.enums.TipoCliente;
+import com.cursosp.projetosp.services.validation.ClienteInsert;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 
+    @NotEmpty(message = "Preenchimento obrigatório")
+    @Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 80")
     private String nome;
+    @NotEmpty(message = "Preenchimento obrigatório")
+    @Email(message = "Preenchimento obrigatório")
     private String email;
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String cpfOuCnpj;
     private Integer tipo;
 

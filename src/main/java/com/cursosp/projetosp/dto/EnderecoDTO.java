@@ -1,11 +1,17 @@
 package com.cursosp.projetosp.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 public class EnderecoDTO {
 
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String logradouro;
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String numero;
     private String complemento;
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String bairro;
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String cep;
 
     private Integer cidadeId;
