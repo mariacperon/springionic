@@ -1,7 +1,10 @@
 package com.cursosp.projetosp.resources;
 
+import com.cursosp.projetosp.domain.Categoria;
 import com.cursosp.projetosp.domain.Cliente;
+import com.cursosp.projetosp.dto.CategoriaDTO;
 import com.cursosp.projetosp.dto.ClienteDTO;
+import com.cursosp.projetosp.dto.ClienteNewDTO;
 import com.cursosp.projetosp.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,7 +43,7 @@ public class ClienteResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDTO){
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO){
         Cliente obj = clienteService.fromDTO(objDTO);
         obj = clienteService.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
