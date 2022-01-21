@@ -52,10 +52,11 @@ public class ClienteService {
         return obj;
     }
 
-    public void update(Cliente obj){
+    @Transactional
+    public Cliente update(Cliente obj){
         Cliente newObj = find(obj.getId());
         updateData(newObj, obj);
-        repository.save(newObj);
+        return repository.save(newObj);
     }
 
     public void delete(Integer id){
