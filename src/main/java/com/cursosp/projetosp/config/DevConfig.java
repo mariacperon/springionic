@@ -23,8 +23,9 @@ public class DevConfig {
     public boolean instantianteDatabase() throws ParseException {
         if (!"create".equals(strategy)){
             return false;
+        }else{
+            dbService.instantiateTestDatabase();
+            return true;
         }
-        dbService.instantiateTestDatabase();
-        return true;
     }
 }
