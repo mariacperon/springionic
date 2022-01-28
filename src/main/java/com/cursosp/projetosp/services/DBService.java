@@ -12,6 +12,7 @@ import com.cursosp.projetosp.domain.PagamentoComCartao;
 import com.cursosp.projetosp.domain.Pedido;
 import com.cursosp.projetosp.domain.Produto;
 import com.cursosp.projetosp.enums.EstadoPagamento;
+import com.cursosp.projetosp.enums.Perfil;
 import com.cursosp.projetosp.enums.TipoCliente;
 import com.cursosp.projetosp.repositories.CategoriaRepository;
 import com.cursosp.projetosp.repositories.CidadeRepository;
@@ -117,6 +118,7 @@ public class DBService {
         Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "89014523", cli1, c2);
         cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
         Cliente cli2 = new Cliente(null, "João Marques", "joao@yahoo.com", "0668643938", TipoCliente.PESSOAFISICA, password.encode("123"));
+        cli2.addPerfil(Perfil.ADMIN);
         cli2.getTelefones().addAll(List.of("478521459856"));
         cli2.getEnderecos().addAll(List.of(e2));
 
