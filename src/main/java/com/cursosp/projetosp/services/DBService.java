@@ -23,6 +23,7 @@ import com.cursosp.projetosp.repositories.PagamentoRepository;
 import com.cursosp.projetosp.repositories.PedidoRepository;
 import com.cursosp.projetosp.repositories.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -35,30 +36,24 @@ public class DBService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
-
     @Autowired
     private ProdutoRepository produtoRepository;
-
     @Autowired
     private EstadoRepository estadoRepository;
-
     @Autowired
     private CidadeRepository cidadeRepository;
-
     @Autowired
     private ClienteRepository clienteRepository;
-
     @Autowired
     private EnderecoRepository enderecoRepository;
-
     @Autowired
     private PedidoRepository pedidoRepository;
-
     @Autowired
     private PagamentoRepository pagamentoRepository;
-
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
+    @Autowired
+    private BCryptPasswordEncoder password;
 
     public void instantiateTestDatabase() throws ParseException {
         Categoria cat1 = new Categoria(null, "Informática");
@@ -116,12 +111,12 @@ public class DBService {
         estadoRepository.saveAll(Arrays.asList(est1, est2));
         cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-        Cliente cli1 = new Cliente(null, "Maria Silva", "mariaareboco@gmail.com", "45412136325", TipoCliente.PESSOAFISICA);
+        Cliente cli1 = new Cliente(null, "Maria Silva", "mariaareboco@gmail.com", "45412136325", TipoCliente.PESSOAFISICA, password.encode("123"));
         cli1.getTelefones().addAll(Arrays.asList("47965231452", "7932568547"));
         Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "89025258", cli1, c1);
         Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "89014523", cli1, c2);
         cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
-        Cliente cli2 = new Cliente(null, "João Marques", "joao@yahoo.com", "0668643938", TipoCliente.PESSOAFISICA);
+        Cliente cli2 = new Cliente(null, "João Marques", "joao@yahoo.com", "0668643938", TipoCliente.PESSOAFISICA, password.encode("123"));
         cli2.getTelefones().addAll(List.of("478521459856"));
         cli2.getEnderecos().addAll(List.of(e2));
 

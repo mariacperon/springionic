@@ -23,6 +23,9 @@ public class ClienteNewDTO implements Serializable {
     private String cpfOuCnpj;
     private Integer tipo;
 
+    @NotEmpty(message = "Preenchimento obrigatório")
+    private String senha;
+
     private Set<EnderecoDTO> enderecos = new HashSet<>();
     private Set<String> telefones = new HashSet<>();
 
@@ -82,5 +85,13 @@ public class ClienteNewDTO implements Serializable {
 
     public void setTelefones(Set<String> telefone) {
         this.telefones = telefone;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }
