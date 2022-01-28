@@ -14,6 +14,8 @@
 	<name>projetosp</name>
 	<description>projeto springboot curso springboot</description>
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>14</java.version>
 	</properties>
 	<dependencies>
@@ -79,15 +81,11 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
-	</dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+	</dependencies>
 
 </project>
