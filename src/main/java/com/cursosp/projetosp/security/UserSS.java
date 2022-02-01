@@ -37,12 +37,12 @@ public class UserSS implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return senha;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override

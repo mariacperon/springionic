@@ -18,6 +18,6 @@ public class JWTUtil {
     private Long expiration;
 
     public String generateToken(String username){
-        return Jwts.builder().setSubject(username).setExpiration(new Date(System.currentTimeMillis() + expiration)).signWith(SignatureAlgorithm.ES512, secret.getBytes(StandardCharsets.UTF_8)).compact();
+        return Jwts.builder().setSubject(username).setExpiration(new Date(System.currentTimeMillis() + expiration)).signWith(SignatureAlgorithm.HS512, secret.getBytes(StandardCharsets.UTF_8)).compact();
     }
 }
