@@ -1,6 +1,7 @@
 package com.cursosp.projetosp.config;
 
 import com.cursosp.projetosp.security.JWTAuthenticationFilter;
+import com.cursosp.projetosp.security.JWTAuthorizationFilter;
 import com.cursosp.projetosp.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -35,9 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/h2-console/**"
     };
 
+    /*
     private static final String[] PUBLIC_MATCHES_POST = {
             "/pedidos/**"
     };
+     */
 
     private static final String[] PUBLIC_MATCHES_GET = {
             "/produtos/**",
@@ -56,10 +59,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, PUBLIC_MATCHES_GET).permitAll()
-                .antMatchers(HttpMethod.POST, PUBLIC_MATCHES_POST).permitAll()
+                //.antMatchers(HttpMethod.POST, PUBLIC_MATCHES_POST).permitAll()
                 .antMatchers(PUBLIC_MATCHES).permitAll()
                 .anyRequest().authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
