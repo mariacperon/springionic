@@ -6,10 +6,13 @@ import com.cursosp.projetosp.domain.Endereco;
 import com.cursosp.projetosp.dto.ClienteDTO;
 import com.cursosp.projetosp.dto.ClienteNewDTO;
 import com.cursosp.projetosp.dto.EnderecoDTO;
+import com.cursosp.projetosp.enums.Perfil;
 import com.cursosp.projetosp.enums.TipoCliente;
 import com.cursosp.projetosp.repositories.CidadeRepository;
 import com.cursosp.projetosp.repositories.ClienteRepository;
 import com.cursosp.projetosp.repositories.EnderecoRepository;
+import com.cursosp.projetosp.security.UserSS;
+import com.cursosp.projetosp.services.exceptions.AuthorizationException;
 import com.cursosp.projetosp.services.exceptions.DataIntegrityException;
 import com.cursosp.projetosp.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +42,10 @@ public class ClienteService {
     private BCryptPasswordEncoder password;
 
     public Cliente find(Integer id){
+        UserSS user = UserService.authenticated();
+        if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())){
+            throw new AuthorizationException("Acesso negado.");
+        }
         Optional<Cliente> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado. ID: "+ id +", tipo: "+ Cliente.class.getName()));
     }
