@@ -17,19 +17,19 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StrandartError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
-        StrandartError err = new StrandartError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
+        StrandartError err = new StrandartError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(), "Não encontrado", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
 
     @ExceptionHandler(DataIntegrityException.class)
     public ResponseEntity<StrandartError> dataIntegrity(DataIntegrityException e, HttpServletRequest request){
-        StrandartError err = new StrandartError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+        StrandartError err = new StrandartError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Integridade de dados", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StrandartError> validation(MethodArgumentNotValidException e, HttpServletRequest request){
-        ValidationError err = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Erro de validação", System.currentTimeMillis());
+        ValidationError err = new ValidationError(System.currentTimeMillis(), HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro de validação", e.getMessage(), request.getRequestURI());
         for(FieldError x : e.getBindingResult().getFieldErrors()){
             err.addError(x.getField(), x.getDefaultMessage());
         }
@@ -38,7 +38,7 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(AuthorizationException.class)
     public ResponseEntity<StrandartError> authorization(AuthorizationException e, HttpServletRequest request){
-        StrandartError err = new StrandartError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+        StrandartError err = new StrandartError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Integridade de dados", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
     }
 
