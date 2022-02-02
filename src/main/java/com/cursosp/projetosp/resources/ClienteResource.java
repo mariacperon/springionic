@@ -36,6 +36,12 @@ public class ClienteResource {
         return ResponseEntity.ok().body(obj);
     }
 
+    @RequestMapping(value = "/email", method = RequestMethod.GET)
+    public ResponseEntity<Cliente> find(@RequestParam(value = "value") String email){
+        Cliente obj = clienteService.findByEmail(email);
+        return  ResponseEntity.ok().body(obj);
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<ClienteDTO>> findAll(){
         List<Cliente> lista = clienteService.findAll();
