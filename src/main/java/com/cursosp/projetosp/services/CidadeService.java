@@ -5,7 +5,9 @@ import com.cursosp.projetosp.repositories.CidadeRepository;
 import com.cursosp.projetosp.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,5 +19,10 @@ public class CidadeService {
     public Cidade find(Integer id){
         Optional<Cidade> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado. ID: "+ id +", tipo: "+ Cidade.class.getName()));
+    }
+
+    @Transactional
+    public List<Cidade> findCidadesByEstadoId(Integer id){
+        return repository.findCidadesByEstadoId(id);
     }
 }
